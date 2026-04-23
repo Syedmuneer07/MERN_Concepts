@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MERN Interview Answer Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:wght@400;600&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #141720;
+    --surface2: #1c2030;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #e8eaf0;
+    --muted: #8891a8;
+    --react: #61dafb;
+    --react-bg: rgba(97,218,251,0.08);
+    --react-border: rgba(97,218,251,0.2);
+    --js: #f7df1e;
+    --js-bg: rgba(247,223,30,0.08);
+    --js-border: rgba(247,223,30,0.2);
+    --node: #68a063;
+    --node-bg: rgba(104,160,99,0.08);
+    --node-border: rgba(104,160,99,0.2);
+    --mongo: #4db33d;
+    --mongo-bg: rgba(77,179,61,0.08);
+    --mongo-border: rgba(77,179,61,0.2);
+    --practical: #a78bfa;
+    --practical-bg: rgba(167,139,250,0.08);
+    --practical-border: rgba(167,139,250,0.2);
+    --tip: rgba(251,191,36,0.1);
+    --tip-border: rgba(251,191,36,0.3);
+    --tip-text: #fbbf24;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Figtree', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 3rem 2rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+  .header-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .header h1 span { color: var(--react); }
+  .header p {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 560px;
+  }
+  .badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 0.5px solid;
+  }
+  .badge-react { color: var(--react); border-color: var(--react-border); background: var(--react-bg); }
+  .badge-js { color: var(--js); border-color: var(--js-border); background: var(--js-bg); }
+  .badge-node { color: var(--node); border-color: var(--node-border); background: var(--node-bg); }
+  .badge-mongo { color: var(--mongo); border-color: var(--mongo-border); background: var(--mongo-bg); }
+  .badge-practical { color: var(--practical); border-color: var(--practical-border); background: var(--practical-bg); }
+
+  /* MAIN */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 3rem;
+  }
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.25rem;
+    padding-bottom: 12px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .section-icon {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-icon.react { background: var(--react-bg); color: var(--react); border: 0.5px solid var(--react-border); }
+  .section-icon.js { background: var(--js-bg); color: var(--js); border: 0.5px solid var(--js-border); }
+  .section-icon.node { background: var(--node-bg); color: var(--node); border: 0.5px solid var(--node-border); }
+  .section-icon.mongo { background: var(--mongo-bg); color: var(--mongo); border: 0.5px solid var(--mongo-border); }
+  .section-icon.practical { background: var(--practical-bg); color: var(--practical); border: 0.5px solid var(--practical-border); }
+  .section-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.3px;
+  }
+  .section-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: auto;
+  }
+
+  /* Q CARDS */
+  .q-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .q-card:hover { border-color: var(--border2); }
+  .q-card.open { border-color: var(--border2); }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+  }
+  .q-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 22px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .q-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+    line-height: 1.5;
+  }
+  .q-chevron {
+    font-size: 10px;
+    color: var(--muted);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .q-card.open .q-chevron { transform: rotate(90deg); }
+
+  .q-body {
+    display: none;
+    padding: 0 16px 16px 50px;
+    border-top: 0.5px solid var(--border);
+    padding-top: 14px;
+  }
+  .q-card.open .q-body { display: block; }
+
+  .answer-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .answer-text {
+    font-size: 14px;
+    color: #c8ccd8;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+  .answer-text strong { color: var(--text); font-weight: 600; }
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    background: var(--surface2);
+    border: 0.5px solid var(--border2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: #a5b4fc;
+  }
+
+  pre {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    background: var(--surface2);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    line-height: 1.6;
+    color: #a5b4fc;
+    margin: 10px 0;
+  }
+  pre .kw { color: #f472b6; }
+  pre .fn { color: #60a5fa; }
+  pre .str { color: #34d399; }
+  pre .cmt { color: #6b7280; font-style: italic; }
+  pre .num { color: #fb923c; }
+
+  .tip-box {
+    background: var(--tip);
+    border: 0.5px solid var(--tip-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--tip-text);
+  }
+  .tip-box strong { color: var(--tip-text); }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  .compare-cell {
+    background: var(--surface2);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .compare-cell .cell-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .compare-cell ul {
+    padding-left: 14px;
+    font-size: 12.5px;
+    color: #9ca3af;
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 0.5px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <p class="header-label">Interview Prep · MERN Stack · Fresher</p>
+  <h1>Best <span>Answers</span> Guide</h1>
+  <p>21 questions across 5 topic areas — click any question to reveal the ideal interview answer.</p>
+  <div class="badges">
+    <span class="badge badge-react">React</span>
+    <span class="badge badge-js">JavaScript</span>
+    <span class="badge badge-node">Node.js & Express</span>
+    <span class="badge badge-mongo">MongoDB</span>
+    <span class="badge badge-practical">Practical Tasks</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ===== REACT ===== -->
+  <div class="section">
+    <div class="section-heading">
+      <div class="section-icon react">R</div>
+      <span class="section-title">React — Frontend</span>
+      <span class="section-count">5 questions</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">01</span>
+        <span class="q-text">What is the difference between functional and class components?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text"><strong>Class components</strong> are ES6 classes that extend <code>React.Component</code>. They have lifecycle methods like <code>componentDidMount</code> and manage state through <code>this.state</code>. <strong>Functional components</strong> are plain JavaScript functions that return JSX. Before React 16.8, they were stateless — but with Hooks, they can now handle state and side effects too.</p>
+        <p class="answer-text">Today, <strong>functional components are the preferred approach</strong> because they're simpler, easier to test, and avoid confusing <code>this</code> binding issues.</p>
+        <pre><span class="cmt">// Class component</span>
+<span class="kw">class</span> <span class="fn">Counter</span> <span class="kw">extends</span> React.Component {
+  state = { count: <span class="num">0</span> };
+  render() { <span class="kw">return</span> &lt;p&gt;{this.state.count}&lt;/p&gt;; }
+}
+
+<span class="cmt">// Functional component (modern)</span>
+<span class="kw">const</span> <span class="fn">Counter</span> = () =&gt; {
+  <span class="kw">const</span> [count, setCount] = useState(<span class="num">0</span>);
+  <span class="kw">return</span> &lt;p&gt;{count}&lt;/p&gt;;
+};</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> Mention that hooks like <code>useState</code> and <code>useEffect</code> replaced most class lifecycle methods, making functional components the standard.</div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">02</span>
+        <span class="q-text">What are React Hooks? Explain useState and useEffect.</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text"><strong>Hooks</strong> are functions that let functional components "hook into" React features like state and lifecycle. They were introduced in React 16.8 to solve problems like complex class hierarchies and hard-to-reuse stateful logic.</p>
+        <p class="answer-text"><code>useState</code> adds local state to a functional component. It returns the current value and a setter function. <code>useEffect</code> handles side effects — things like fetching data, subscriptions, or DOM manipulation — replacing lifecycle methods like <code>componentDidMount</code> and <code>componentDidUpdate</code>.</p>
+        <pre><span class="kw">const</span> <span class="fn">Example</span> = () =&gt; {
+  <span class="kw">const</span> [data, setData] = <span class="fn">useState</span>(<span class="kw">null</span>);
+
+  <span class="fn">useEffect</span>(() =&gt; {
+    <span class="cmt">// Runs after render. [] = run once on mount</span>
+    fetch(<span class="str">'/api/data'</span>)
+      .then(r =&gt; r.json())
+      .then(setData);
+  }, []); <span class="cmt">// dependency array</span>
+
+  <span class="kw">return</span> &lt;div&gt;{data?.name}&lt;/div&gt;;
+};</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> The dependency array is key — empty <code>[]</code> = run once, <code>[value]</code> = run when value changes, no array = run every render.</div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">03</span>
+        <span class="q-text">What is a Higher Order Component (HOC)?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text">A <strong>Higher Order Component</strong> is a function that takes a component and returns a new enhanced component. It's a pattern for reusing component logic — similar to higher-order functions in JavaScript.</p>
+        <p class="answer-text">Common use cases: authentication checks, loading states, logging, or injecting props.</p>
+        <pre><span class="kw">const</span> <span class="fn">withAuth</span> = (WrappedComponent) =&gt; {
+  <span class="kw">return</span> (props) =&gt; {
+    <span class="kw">if</span> (!isLoggedIn) <span class="kw">return</span> &lt;Redirect to=<span class="str">"/login"</span> /&gt;;
+    <span class="kw">return</span> &lt;WrappedComponent {...props} /&gt;;
+  };
+};
+
+<span class="kw">const</span> ProtectedDashboard = <span class="fn">withAuth</span>(Dashboard);</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> You can mention that React Hooks (like custom hooks) are now often preferred over HOCs for reusing logic, but HOCs are still widely used in older codebases.</div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">04</span>
+        <span class="q-text">How does React Fiber work?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text"><strong>React Fiber</strong> is the internal reconciliation engine introduced in React 16. The old engine processed the component tree synchronously in one pass — if it took too long, it would block the browser, causing dropped frames.</p>
+        <p class="answer-text">Fiber breaks rendering into small units of work that can be <strong>paused, resumed, and prioritized</strong>. This enables features like concurrent rendering, Suspense, and time-slicing — where React can interrupt low-priority updates to handle urgent ones (like user input) first.</p>
+        <div class="tip-box"><strong>💡 Tip:</strong> For a fresher, just understanding that Fiber = incremental rendering = better performance/UX is impressive enough. You don't need to know the internal linked-list structure.</div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">05</span>
+        <span class="q-text">How do you optimize performance in React apps?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text">There are several key techniques:</p>
+        <p class="answer-text">
+          <strong>1. React.memo</strong> — prevents re-renders if props haven't changed.<br>
+          <strong>2. useMemo / useCallback</strong> — memoize expensive calculations and functions.<br>
+          <strong>3. Code splitting</strong> — use <code>React.lazy</code> + <code>Suspense</code> to load components only when needed.<br>
+          <strong>4. Avoid anonymous functions in JSX</strong> — they recreate on every render.<br>
+          <strong>5. Virtualization</strong> — use libraries like <code>react-window</code> for long lists.<br>
+          <strong>6. Key prop</strong> — always use stable, unique keys in lists so React can diff efficiently.
+        </p>
+        <div class="tip-box"><strong>💡 Tip:</strong> Don't just list these — say "I'd first profile the app using React DevTools Profiler to identify actual bottlenecks before optimizing." This shows you think pragmatically.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <div class="section">
+    <div class="section-heading">
+      <div class="section-icon js">JS</div>
+      <span class="section-title">JavaScript</span>
+      <span class="section-count">4 questions</span>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">06</span>
+        <span class="q-text">Difference between var, let, and const.</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <div class="compare-grid">
+          <div class="compare-cell">
+            <p class="cell-title" style="color:#ef4444;">var</p>
+            <ul>
+              <li>Function-scoped</li>
+              <li>Hoisted and initialized to <code>undefined</code></li>
+              <li>Can be re-declared</li>
+              <li>Avoid in modern code</li>
+            </ul>
+          </div>
+          <div class="compare-cell">
+            <p class="cell-title" style="color:#60a5fa;">let</p>
+            <ul>
+              <li>Block-scoped <code>{ }</code></li>
+              <li>Hoisted but NOT initialized (TDZ)</li>
+              <li>Cannot be re-declared</li>
+              <li>Use for mutable values</li>
+            </ul>
+          </div>
+        </div>
+        <div class="compare-cell" style="margin:10px 0;">
+          <p class="cell-title" style="color:#34d399;">const</p>
+          <ul>
+            <li>Block-scoped like <code>let</code></li>
+            <li>Must be initialized at declaration</li>
+            <li>Cannot be reassigned (but object contents can change)</li>
+            <li>Prefer for most declarations</li>
+          </ul>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Good rule of thumb — use <code>const</code> by default, <code>let</code> when you need to reassign, and never use <code>var</code>.</div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">07</span>
+        <span class="q-text">What is a closure?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text">A <strong>closure</strong> is when an inner function retains access to variables from its outer function's scope, even after the outer function has finished executing. This is a natural result of how JavaScript's lexical scoping works.</p>
+        <pre><span class="kw">function</span> <span class="fn">makeCounter</span>() {
+  <span class="kw">let</span> count = <span class="num">0</span>; <span class="cmt">// outer variable</span>
+  <span class="kw">return</span> <span class="kw">function</span>() {
+    count++; <span class="cmt">// inner function "closes over" count</span>
+    <span class="kw">return</span> count;
+  };
+}
+
+<span class="kw">const</span> counter = <span class="fn">makeCounter</span>();
+<span class="fn">counter</span>(); <span class="cmt">// 1</span>
+<span class="fn">counter</span>(); <span class="cmt">// 2  (count persists!)</span></pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> Real-world uses: data privacy, memoization, event handlers, factory functions. React's <code>useState</code> internally uses closures.</div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">08</span>
+        <span class="q-text">Explain promises and async/await.</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text">A <strong>Promise</strong> is an object representing the eventual result of an async operation. It has three states: <strong>pending</strong>, <strong>fulfilled</strong>, or <strong>rejected</strong>. We chain <code>.then()</code> for success and <code>.catch()</code> for errors.</p>
+        <p class="answer-text"><strong>async/await</strong> is syntactic sugar over promises — it lets you write async code that looks synchronous, making it much easier to read and debug.</p>
+        <pre><span class="cmt">// Promise way</span>
+<span class="fn">fetch</span>(<span class="str">'/api/user'</span>)
+  .then(res =&gt; res.<span class="fn">json</span>())
+  .then(data =&gt; console.<span class="fn">log</span>(data))
+  .catch(err =&gt; console.<span class="fn">error</span>(err));
+
+<span class="cmt">// async/await way (cleaner)</span>
+<span class="kw">async function</span> <span class="fn">getUser</span>() {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'/api/user'</span>);
+    <span class="kw">const</span> data = <span class="kw">await</span> res.<span class="fn">json</span>();
+    console.<span class="fn">log</span>(data);
+  } <span class="kw">catch</span> (err) {
+    console.<span class="fn">error</span>(err);
+  }
+}</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> Always wrap <code>await</code> in <code>try/catch</code> to handle rejections. For parallel requests, use <code>Promise.all()</code> — it's faster than awaiting sequentially.</div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">09</span>
+        <span class="q-text">What is event bubbling and event.preventDefault()?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text"><strong>Event bubbling</strong> means when an event fires on a child element, it also "bubbles up" through all its parent elements, triggering their handlers too. For example, clicking a button inside a div will also fire the div's click handler.</p>
+        <p class="answer-text">You can stop this with <code>event.stopPropagation()</code>. <code>event.preventDefault()</code> is different — it prevents the browser's default behavior (like a form submitting and reloading the page, or a link navigating away), but the event still bubbles.</p>
+        <pre><span class="cmt">// Prevent form page-reload</span>
+form.<span class="fn">addEventListener</span>(<span class="str">'submit'</span>, (e) =&gt; {
+  e.<span class="fn">preventDefault</span>(); <span class="cmt">// stops default behavior</span>
+  <span class="fn">handleSubmit</span>();
+});
+
+<span class="cmt">// Stop click from bubbling to parent</span>
+button.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (e) =&gt; {
+  e.<span class="fn">stopPropagation</span>(); <span class="cmt">// stops bubbling</span>
+});</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> They're often confused. Simple way to remember — <code>preventDefault()</code> stops the browser, <code>stopPropagation()</code> stops other JS handlers from firing.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== NODE / EXPRESS ===== -->
+  <div class="section">
+    <div class="section-heading">
+      <div class="section-icon node">N</div>
+      <span class="section-title">Node.js & Express — Backend</span>
+      <span class="section-count">4 questions</span>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">10</span>
+        <span class="q-text">What is middleware in Express.js?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text"><strong>Middleware</strong> is a function that runs between a request arriving at the server and a response being sent. It has access to <code>req</code>, <code>res</code>, and <code>next()</code>. Calling <code>next()</code> passes control to the next middleware in the chain.</p>
+        <p class="answer-text">Common uses: logging, authentication, parsing request bodies, handling errors, CORS.</p>
+        <pre><span class="cmt">// Custom auth middleware</span>
+<span class="kw">const</span> <span class="fn">authMiddleware</span> = (req, res, next) =&gt; {
+  <span class="kw">const</span> token = req.headers.authorization;
+  <span class="kw">if</span> (!token) <span class="kw">return</span> res.<span class="fn">status</span>(<span class="num">401</span>).<span class="fn">json</span>({ error: <span class="str">'Unauthorized'</span> });
+  req.user = <span class="fn">verifyToken</span>(token);
+  <span class="fn">next</span>(); <span class="cmt">// pass to next handler</span>
+};
+
+app.<span class="fn">get</span>(<span class="str">'/dashboard'</span>, authMiddleware, <span class="fn">dashboardHandler</span>);</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> Think of middleware as an assembly line — each function can inspect, modify, or reject the request before it reaches the final route handler.</div>
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">11</span>
+        <span class="q-text">How does the request-response cycle work in Express?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text">When a client sends an HTTP request, Express receives it and passes it through a chain of middleware functions in order. Each middleware can process the request, add data to it, or send a response back. If a middleware calls <code>next()</code>, control passes to the next one. The cycle ends when a route handler sends a response using <code>res.send()</code>, <code>res.json()</code>, or similar.</p>
+        <pre>Client Request
+  → Global middleware (logger, body-parser, cors)
+  → Route-specific middleware (auth)
+  → Route handler (business logic, DB calls)
+  → Response sent to client</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> If no middleware sends a response, the request "hangs." Always make sure every code path either calls <code>next()</code> or sends a response.</div>
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">12</span>
+        <span class="q-text">What is a REST API?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text"><strong>REST (Representational State Transfer)</strong> is an architectural style for designing APIs. A REST API uses standard HTTP methods and URLs to represent and interact with resources.</p>
+        <div class="compare-cell" style="margin:10px 0;">
+          <ul style="list-style:none; padding:0;">
+            <li style="padding:4px 0; font-size:13px; color:#c8ccd8;"><code style="color:#60a5fa;">GET</code> &nbsp;&nbsp;&nbsp; /users → fetch all users</li>
+            <li style="padding:4px 0; font-size:13px; color:#c8ccd8;"><code style="color:#34d399;">POST</code> &nbsp;&nbsp; /users → create a user</li>
+            <li style="padding:4px 0; font-size:13px; color:#c8ccd8;"><code style="color:#fbbf24;">PUT</code> &nbsp;&nbsp;&nbsp; /users/:id → update a user</li>
+            <li style="padding:4px 0; font-size:13px; color:#c8ccd8;"><code style="color:#f87171;">DELETE</code> /users/:id → delete a user</li>
+          </ul>
+        </div>
+        <p class="answer-text">REST APIs are <strong>stateless</strong> — each request is self-contained and doesn't depend on previous ones. The server never stores session state between requests.</p>
+        <div class="tip-box"><strong>💡 Tip:</strong> Key REST principles: stateless, uniform interface, client-server separation, and resource-based URLs (nouns, not verbs — <code>/users</code> not <code>/getUsers</code>).</div>
+      </div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">13</span>
+        <span class="q-text">Difference between synchronous and asynchronous operations.</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text"><strong>Synchronous</strong> operations run one at a time, in order — each line waits for the previous to finish before executing. If one operation takes long, everything else is blocked.</p>
+        <p class="answer-text"><strong>Asynchronous</strong> operations don't block execution. Node.js is single-threaded, so async is essential — operations like reading files or querying a database are handed off to the event loop, freeing the thread to handle other requests while waiting.</p>
+        <pre><span class="cmt">// Sync — blocks execution</span>
+<span class="kw">const</span> data = fs.<span class="fn">readFileSync</span>(<span class="str">'file.txt'</span>);
+
+<span class="cmt">// Async — non-blocking</span>
+<span class="kw">const</span> data = <span class="kw">await</span> fs.promises.<span class="fn">readFile</span>(<span class="str">'file.txt'</span>);</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> In Node.js, always prefer async I/O. Sync operations in a server block the entire event loop — one slow operation can delay all users' requests.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MONGODB ===== -->
+  <div class="section">
+    <div class="section-heading">
+      <div class="section-icon mongo">M</div>
+      <span class="section-title">MongoDB — Database</span>
+      <span class="section-count">4 questions</span>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">14</span>
+        <span class="q-text">What is MongoDB?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text"><strong>MongoDB</strong> is a NoSQL document database that stores data as flexible JSON-like documents (BSON format) instead of rows and columns. Each document is a self-contained unit that can have nested objects and arrays.</p>
+        <p class="answer-text">It's schema-flexible — documents in the same collection don't need the same structure. This makes it well-suited for applications with evolving data shapes, like user profiles, product catalogs, or real-time apps.</p>
+        <pre><span class="cmt">// A MongoDB document</span>
+{
+  _id: ObjectId(<span class="str">"..."</span>),
+  name: <span class="str">"Alice"</span>,
+  email: <span class="str">"alice@example.com"</span>,
+  orders: [{ item: <span class="str">"book"</span>, qty: <span class="num">2</span> }]  <span class="cmt">// nested!</span>
+}</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> Mention that MongoDB is part of the MERN stack because it pairs naturally with JavaScript — data is stored and queried as JSON, eliminating the object-relational mismatch.</div>
+      </div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">15</span>
+        <span class="q-text">Difference between SQL and NoSQL databases.</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <div class="compare-grid">
+          <div class="compare-cell">
+            <p class="cell-title" style="color:#60a5fa;">SQL</p>
+            <ul>
+              <li>Tables with fixed schema</li>
+              <li>Rigid structure (rows/columns)</li>
+              <li>Supports JOINs across tables</li>
+              <li>ACID transactions</li>
+              <li>MySQL, PostgreSQL</li>
+            </ul>
+          </div>
+          <div class="compare-cell">
+            <p class="cell-title" style="color:#4db33d;">NoSQL</p>
+            <ul>
+              <li>Documents, key-value, graphs</li>
+              <li>Flexible, schema-less</li>
+              <li>Data embedded in documents</li>
+              <li>Scales horizontally</li>
+              <li>MongoDB, Redis, Cassandra</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Neither is "better" — SQL is great for relational data with complex queries; NoSQL shines for flexible, high-volume, rapidly evolving data. Show you understand the trade-offs.</div>
+      </div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">16</span>
+        <span class="q-text">What is aggregation in MongoDB?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text"><strong>Aggregation</strong> is MongoDB's way to process and transform documents using a <strong>pipeline</strong> — a series of stages where the output of one stage becomes the input of the next. It's similar to SQL's <code>GROUP BY</code>, <code>JOIN</code>, and <code>HAVING</code> combined.</p>
+        <pre><span class="cmt">// Count orders per user, only show top 5</span>
+db.orders.<span class="fn">aggregate</span>([
+  { $match: { status: <span class="str">"completed"</span> } },  <span class="cmt">// filter</span>
+  { $group: { _id: <span class="str">"$userId"</span>, total: { $sum: <span class="num">1</span> } } }, <span class="cmt">// group</span>
+  { $sort: { total: <span class="num">-1</span> } },  <span class="cmt">// sort descending</span>
+  { $limit: <span class="num">5</span> }  <span class="cmt">// take top 5</span>
+]);</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> Common stages to know: <code>$match</code> (filter), <code>$group</code> (aggregate), <code>$project</code> (select fields), <code>$sort</code>, <code>$limit</code>, <code>$lookup</code> (join).</div>
+      </div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">17</span>
+        <span class="q-text">How do you design a schema in MongoDB?</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Best Answer</p>
+        <p class="answer-text">MongoDB is schema-less by nature, but in practice we define structure using <strong>Mongoose schemas</strong> in Node.js. The key design decision is <strong>embedding vs. referencing</strong>:</p>
+        <p class="answer-text"><strong>Embed</strong> when data is always accessed together and the nested data is small (e.g., a user's address inside the user document). <strong>Reference</strong> (like a foreign key) when data is large, shared across documents, or updated independently (e.g., orders referencing a product by ID).</p>
+        <pre><span class="cmt">// Mongoose schema with Mongoose</span>
+<span class="kw">const</span> userSchema = <span class="kw">new</span> Schema({
+  name: { type: String, required: <span class="kw">true</span> },
+  email: { type: String, unique: <span class="kw">true</span> },
+  age: { type: Number, min: <span class="num">0</span> },
+  createdAt: { type: Date, default: Date.now }
+});</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> Design schema based on query patterns, not just data relationships. How you'll read the data should drive how you structure it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PRACTICAL ===== -->
+  <div class="section">
+    <div class="section-heading">
+      <div class="section-icon practical">&lt;/&gt;</div>
+      <span class="section-title">Practical / Coding Tasks</span>
+      <span class="section-count">4 tasks</span>
+    </div>
+
+    <!-- Q18 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">18</span>
+        <span class="q-text">Build a simple counter app in React.</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Clean Solution</p>
+        <pre><span class="kw">import</span> { useState } <span class="kw">from</span> <span class="str">'react'</span>;
+
+<span class="kw">export default function</span> <span class="fn">Counter</span>() {
+  <span class="kw">const</span> [count, setCount] = <span class="fn">useState</span>(<span class="num">0</span>);
+
+  <span class="kw">return</span> (
+    &lt;div&gt;
+      &lt;h2&gt;Count: {count}&lt;/h2&gt;
+      &lt;button onClick={() =&gt; <span class="fn">setCount</span>(c =&gt; c + <span class="num">1</span>)}&gt;+&lt;/button&gt;
+      &lt;button onClick={() =&gt; <span class="fn">setCount</span>(c =&gt; c - <span class="num">1</span>)}&gt;−&lt;/button&gt;
+      &lt;button onClick={() =&gt; <span class="fn">setCount</span>(<span class="num">0</span>)}&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> Use the functional updater form <code>c => c + 1</code> instead of <code>count + 1</code> — it's safer when state updates are batched (shows you understand React's async state).</div>
+      </div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">19</span>
+        <span class="q-text">Create a form with validation in React.</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Clean Solution</p>
+        <pre><span class="kw">function</span> <span class="fn">LoginForm</span>() {
+  <span class="kw">const</span> [form, setForm] = <span class="fn">useState</span>({ email: <span class="str">''</span>, password: <span class="str">''</span> });
+  <span class="kw">const</span> [errors, setErrors] = <span class="fn">useState</span>({});
+
+  <span class="kw">const</span> <span class="fn">validate</span> = () =&gt; {
+    <span class="kw">const</span> e = {};
+    <span class="kw">if</span> (!form.email.includes(<span class="str">'@'</span>)) e.email = <span class="str">'Invalid email'</span>;
+    <span class="kw">if</span> (form.password.length &lt; <span class="num">6</span>) e.password = <span class="str">'Min 6 characters'</span>;
+    <span class="kw">return</span> e;
+  };
+
+  <span class="kw">const</span> <span class="fn">handleSubmit</span> = (e) =&gt; {
+    e.<span class="fn">preventDefault</span>();
+    <span class="kw">const</span> errs = <span class="fn">validate</span>();
+    <span class="kw">if</span> (Object.<span class="fn">keys</span>(errs).length) { <span class="fn">setErrors</span>(errs); <span class="kw">return</span>; }
+    console.<span class="fn">log</span>(<span class="str">'Submitted'</span>, form);
+  };
+
+  <span class="kw">return</span> (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input value={form.email}
+        onChange={e =&gt; <span class="fn">setForm</span>({...form, email: e.target.value})} /&gt;
+      {errors.email &amp;&amp; &lt;p&gt;{errors.email}&lt;/p&gt;}
+      &lt;button type=<span class="str">"submit"</span>&gt;Login&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> For production, mention libraries like <strong>React Hook Form</strong> or <strong>Formik</strong> with <strong>Yup</strong> for complex validation — shows real-world awareness.</div>
+      </div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">20</span>
+        <span class="q-text">Fetch and display data from an API.</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Clean Solution</p>
+        <pre><span class="kw">function</span> <span class="fn">UserList</span>() {
+  <span class="kw">const</span> [users, setUsers] = <span class="fn">useState</span>([]);
+  <span class="kw">const</span> [loading, setLoading] = <span class="fn">useState</span>(<span class="kw">true</span>);
+  <span class="kw">const</span> [error, setError] = <span class="fn">useState</span>(<span class="kw">null</span>);
+
+  <span class="fn">useEffect</span>(() =&gt; {
+    <span class="fn">fetch</span>(<span class="str">'https://jsonplaceholder.typicode.com/users'</span>)
+      .then(r =&gt; { <span class="kw">if</span> (!r.ok) <span class="kw">throw new</span> Error(<span class="str">'Failed'</span>); <span class="kw">return</span> r.<span class="fn">json</span>(); })
+      .then(setUsers)
+      .catch(setError)
+      .finally(() =&gt; <span class="fn">setLoading</span>(<span class="kw">false</span>));
+  }, []);
+
+  <span class="kw">if</span> (loading) <span class="kw">return</span> &lt;p&gt;Loading...&lt;/p&gt;;
+  <span class="kw">if</span> (error) <span class="kw">return</span> &lt;p&gt;Error: {error.message}&lt;/p&gt;;
+  <span class="kw">return</span> &lt;ul&gt;{users.map(u =&gt; &lt;li key={u.id}&gt;{u.name}&lt;/li&gt;)}&lt;/ul&gt;;
+}</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> Always handle all three states: loading, error, and success. Interviewers watch for this. Also add <code>!r.ok</code> check — <code>fetch</code> doesn't throw on 4xx/5xx errors.</div>
+      </div>
+    </div>
+
+    <!-- Q21 -->
+    <div class="q-card" onclick="toggle(this)">
+      <div class="q-header">
+        <span class="q-num">21</span>
+        <span class="q-text">Implement a basic CRUD operation (Express + MongoDB).</span>
+        <span class="q-chevron">▶</span>
+      </div>
+      <div class="q-body">
+        <p class="answer-label">Clean Solution</p>
+        <pre><span class="cmt">// Express CRUD routes for a User resource</span>
+<span class="kw">const</span> router = express.<span class="fn">Router</span>();
+
+<span class="cmt">// CREATE</span>
+router.<span class="fn">post</span>(<span class="str">'/'</span>, <span class="kw">async</span> (req, res) =&gt; {
+  <span class="kw">const</span> user = <span class="kw">await</span> User.<span class="fn">create</span>(req.body);
+  res.<span class="fn">status</span>(<span class="num">201</span>).<span class="fn">json</span>(user);
+});
+
+<span class="cmt">// READ ALL</span>
+router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="kw">async</span> (req, res) =&gt; {
+  <span class="kw">const</span> users = <span class="kw">await</span> User.<span class="fn">find</span>();
+  res.<span class="fn">json</span>(users);
+});
+
+<span class="cmt">// UPDATE</span>
+router.<span class="fn">put</span>(<span class="str">'/:id'</span>, <span class="kw">async</span> (req, res) =&gt; {
+  <span class="kw">const</span> user = <span class="kw">await</span> User.<span class="fn">findByIdAndUpdate</span>(req.params.id, req.body, { new: <span class="kw">true</span> });
+  res.<span class="fn">json</span>(user);
+});
+
+<span class="cmt">// DELETE</span>
+router.<span class="fn">delete</span>(<span class="str">'/:id'</span>, <span class="kw">async</span> (req, res) =&gt; {
+  <span class="kw">await</span> User.<span class="fn">findByIdAndDelete</span>(req.params.id);
+  res.<span class="fn">status</span>(<span class="num">204</span>).<span class="fn">send</span>();
+});</pre>
+        <div class="tip-box"><strong>💡 Tip:</strong> Wrap each handler in <code>try/catch</code> and return appropriate HTTP status codes: 201 for created, 204 for deleted, 404 for not found. This shows production thinking.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  21 questions · MERN Stack · Fresher Interview Guide · Click any card to expand
+</div>
+
+<script>
+  function toggle(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
